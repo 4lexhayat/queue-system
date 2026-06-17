@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת זימון תורים</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #005a9c; margin-bottom: 20px; }
+        p { font-size: 1.1em; color: #333; line-height: 1.5; margin-bottom: 15px; }
+        input { width: calc(100% - 22px); padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box; }
+        button { background-color: #005a9c; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; transition: background-color 0.3s; }
+        button:hover { background-color: #003d6d; }
+        .btn-secondary { background-color: #6c757d; margin-top: 15px; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .error-message { color: #d9534f; font-weight: bold; font-size: 1.2em; }
+        .success-message { color: #28a745; font-weight: bold; font-size: 1.2em; }
+        .result-image { max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px; }
+        .agent-btn { margin-bottom: 10px; background-color: #17a2b8; }
+        .agent-btn:hover { background-color: #138496; }
+        .main-logo { max-width: 180px; height: auto; margin: 0 auto 15px auto; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="login-screen">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMUyISrUexY1HbnqxTx4Bpgn27dafoxRmz_HYUINRVoQ&s=10" alt="לוגו" class="main-logo">
+    <h2>מערכת זימון תורים</h2>
+    <p>נא להזדהות להמשך התהליך (שדה אחד לפחות):</p>
+    <input type="text" id="id-number" placeholder="מספר GM">
+    <input type="text" id="phone-number" placeholder="מספר נייד">
+    
+    <p id="error-msg" style="color: red; display: none; font-weight: bold; margin-top: 10px; font-size: 0.9em;">נא למלא מספר GM או נייד כדי להמשיך</p>
+    
+    <button onclick="checkQueue()">המשך למערכת</button>
+</div>
+
+<div class="container" id="agent-screen" style="display: none;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMUyISrUexY1HbnqxTx4Bpgn27dafoxRmz_HYUINRVoQ&s=10" alt="לוגו" class="main-logo">
+    <h2>בחירת נציג</h2>
+    <p>אנא בחר/י את הנציג המבוקש לקביעת התור:</p>
+    <button class="agent-btn" onclick="showResult('itay')">איתי חיון</button>
+    <button class="agent-btn" onclick="showResult('paz')">פז פוגל</button>
+    <button class="agent-btn" onclick="showResult('sandrine')">סנדרין סולטן</button>
+    <button class="btn-secondary" onclick="location.reload()">חזרה להתחלה</button>
+</div>
+
+<div class="container" id="result-screen" style="display: none;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMUyISrUexY1HbnqxTx4Bpgn27dafoxRmz_HYUINRVoQ&s=10" alt="לוגו" class="main-logo">
+    <h2 id="status-title"></h2>
+    <div id="status-content"></div>
+    <button class="btn-secondary" onclick="goBackToAgents()">חזרה לבחירת נציג</button>
+</div>
+
+<script>
+    function checkQueue() {
+        var idVal = document.getElementById('id-number').value;
+        var phoneVal = document.getElementById('phone-number').value;
+        var errorMsg = document.getElementById('error-msg');
+        
+        if (idVal !== "" || phoneVal !== "") {
+            // מסתיר את השגיאה אם הופיעה, ומעביר מסך
+            errorMsg.style.display = 'none';
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('agent-screen').style.display = 'block';
+        } else {
+            // מציג את השגיאה בתוך העמוד
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    function showResult(agent) {
+        document.getElementById('agent-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        
+        var title = document.getElementById('status-title');
+        var content = document.getElementById('status-content');
+        
+        content.innerHTML = "";
+        
+        if (agent === 'paz') {
+            title.innerText = "בקשתך נדחתה!";
+            title.style.color = "#d9534f";
+            content.innerHTML = '<p class="error-message">הבקשה נדחתה.<br>פז כרגע בחופשת סיגריה.</p>';
+        } else if (agent === 'sandrine') {
+            title.innerText = "הודעה מערכתית";
+            title.style.color = "#005a9c";
+            content.innerHTML = '<img src="https://m.media-amazon.com/images/I/51S3DhVCdxL._AC_SL1500_.jpg" alt="Sandrine" class="result-image">';
+        } else if (agent === 'itay') {
+            title.innerText = "תורך נקבע בהצלחה!";
+            title.style.color = "#28a745";
+            content.innerHTML = '<p class="success-message">הפגישה נקבעה.<br>יש לפגוש אותי בבריכת הזן של גרגו.</p>';
+        }
+    }
+
+    function goBackToAgents() {
+        document.getElementById('result-screen').style.display = 'none';
+        document.getElementById('agent-screen').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
