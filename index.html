@@ -44,6 +44,7 @@
     <button class="agent-btn" onclick="showResult('paz')">פז פוגל</button>
     <button class="agent-btn" onclick="showResult('sandrine')">סנדרין סולטן</button>
     <button class="agent-btn" onclick="showResult('tirana')">טירנה קנולר</button>
+    <button class="agent-btn" onclick="showResult('michael')">מיכאל טולדנו</button>
     
     <button class="btn-secondary" onclick="location.reload()">חזרה להתחלה</button>
 </div>
@@ -62,12 +63,10 @@
         var errorMsg = document.getElementById('error-msg');
         
         if (idVal !== "" || phoneVal !== "") {
-            // מסתיר את השגיאה אם הופיעה, ומעביר מסך
             errorMsg.style.display = 'none';
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('agent-screen').style.display = 'block';
         } else {
-            // מציג את השגיאה בתוך העמוד
             errorMsg.style.display = 'block';
         }
     }
@@ -94,10 +93,13 @@
             title.style.color = "#28a745";
             content.innerHTML = '<p class="success-message">הפגישה נקבעה.<br>יש לפגוש אותי בבריכת הזן של גרגו.</p>';
         } else if (agent === 'tirana') {
-            // התגובה החדשה של טירנה
             title.innerText = "הודעה מערכתית";
             title.style.color = "#d9534f";
-            content.innerHTML = '<p class="error-message">אין צורך בתור.<br>לגבי שאלתך - שלילי בזנט!</p>';
+            content.innerHTML = '<p class="error-message">אין צורך בתור.<br>לגבי שאלתך - שלילי בזנט!</p><div style="font-size: 80px; margin-top: 10px;">🫰</div>';
+        } else if (agent === 'michael') {
+            title.innerText = "הודעה ממיכאל";
+            title.style.color = "#6f42c1"; // סגול ייחודי
+            content.innerHTML = '<p style="font-size: 1.2em; font-weight: bold; color: #6f42c1;">הגב אליך אבל הלב איתך.<br>אגב אתה רוצה גור חתולים אולי?</p>';
         }
     }
 
