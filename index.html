@@ -43,6 +43,8 @@
     <button class="agent-btn" onclick="showResult('itay')">איתי חיון</button>
     <button class="agent-btn" onclick="showResult('paz')">פז פוגל</button>
     <button class="agent-btn" onclick="showResult('sandrine')">סנדרין סולטן</button>
+    <button class="agent-btn" onclick="showResult('tirana')">טירנה קנולר</button>
+    
     <button class="btn-secondary" onclick="location.reload()">חזרה להתחלה</button>
 </div>
 
@@ -91,6 +93,11 @@
             title.innerText = "תורך נקבע בהצלחה!";
             title.style.color = "#28a745";
             content.innerHTML = '<p class="success-message">הפגישה נקבעה.<br>יש לפגוש אותי בבריכת הזן של גרגו.</p>';
+        } else if (agent === 'tirana') {
+            // התגובה החדשה של טירנה
+            title.innerText = "הודעה מערכתית";
+            title.style.color = "#d9534f";
+            content.innerHTML = '<p class="error-message">אין צורך בתור.<br>לגבי שאלתך - שלילי בזנט!</p>';
         }
     }
 
